@@ -1,79 +1,75 @@
 package list;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 public class AverageTemperature {
-    
     public static void main(String[] args) {
-
-        int januaryTemperature;
-        int februaryTemperature;
-        int marchTemperature;
-        int aprilTemperature;
-        int mayTemperature;
-        int juneTemperature;
-        int sixMonthAverage;
-        String[] sixMonth = {"1 - January", "2 - February", "3 - March", "4 - April", "5 - May", "6 - June"};
-
-        //Using Scanner to read and store user input:
-        try (Scanner reader = new Scanner(System.in)) {
-
-            System.out.println("Enter the average temperature for january: ");
-            januaryTemperature = reader.nextInt();
-
-            System.out.println("Enter the average temperature for february: ");
-            februaryTemperature = reader.nextInt();
-
-            System.out.println("Enter the average temperature for march: ");
-            marchTemperature = reader.nextInt();
-
-            System.out.println("Enter the average temperature for april: ");
-            aprilTemperature = reader.nextInt();
-
-            System.out.println("Enter the average temperature for may: ");
-            mayTemperature = reader.nextInt();
-
-            System.out.println("Enter the average temperature for june: ");
-            juneTemperature = reader.nextInt();
-            
-        }
-
-        //Creating list to store temperatures:
-        List<Integer> temperature = new ArrayList<>();
+        Scanner reader = new Scanner(System.in);
+        List<Double> temperatures = new ArrayList<Double>();
 
         //Adding temperatures to the list:
-        temperature.add(januaryTemperature);
-        temperature.add(februaryTemperature);
-        temperature.add(marchTemperature);
-        temperature.add(aprilTemperature);
-        temperature.add(mayTemperature);
-        temperature.add(juneTemperature);
+        int counter = 0;
+        while (true) {
+            if (counter == 6) break;
 
-        //Displaying all temperatures:
-        System.out.println();
-        System.out.println("All temperatures: " + temperature);
-
-        //Calculating and displaying average temperatures:
-        sixMonthAverage = (januaryTemperature + februaryTemperature + marchTemperature + aprilTemperature + mayTemperature + juneTemperature) / 6;
-        System.out.println();
-        System.out.println(sixMonthAverage);
-
-        //Using forEach to loop through each element of the temperature list:
-        for (Integer temp : temperature) {
-            
-            //Using if to find temperatures above the half-yearly average:
-            if (temp > sixMonthAverage) {
-
-                //Displaying the temperatures above the six-month average and the month in which they occurred respectively:
-                System.out.println();
-                System.out.println(temp + " " + sixMonth[temperature.indexOf(temp)]);
-            
-            }
-
+            System.out.print("Enter the temperature: ");
+            double temp = reader.nextDouble();
+            temperatures.add(temp);
+            counter++;
         }
+        
+        //displaying all temperatures:
+        System.out.print("\nAll temperatures: ");
+        temperatures.forEach(t -> System.out.print(t + " "));
 
+        //calculating and displaying the average of the temperatures:
+        double average = temperatures.stream()
+                .mapToDouble(Double::doubleValue)
+                .average()
+                .orElse(0d);
+        System.out.printf("\nAverage of temperatures: %.1f\n", average);
+
+        //displaying above average temperatures
+        System.out.print("Above average temperatures: ");
+        temperatures.stream()
+                .filter(t -> t > average)
+                .forEach(t -> System.out.printf("%.1f ", t));
+
+        //displaying the month of above-average temperatures spelled out:
+        System.out.println("\n\nMonths of above-average temperatures: ");
+        Iterator<Double> iterator = temperatures.iterator();
+
+        counter = 0;
+        while (iterator.hasNext()) {
+            Double temp = iterator.next();
+            if (temp > average) {
+                switch (counter) {
+                    case (0):
+                        System.out.printf("1 - january: %.1f\n ", temp);
+                        break;
+                    case (1):
+                        System.out.printf("2 - february: %.1f\n", temp);
+                        break;
+                    case (2):
+                        System.out.printf("3 - march: %.1f\n", temp);
+                        break;
+                    case (3):
+                        System.out.printf("4 - april: %.1f\n", temp);
+                        break;
+                    case (4):
+                        System.out.printf("5 - may: %.1f\n", temp);
+                        break;
+                    case (5):
+                        System.out.printf("6 - june: %.1f\n", temp);
+                        break;
+                    default:
+                        System.out.println("There was no temperature above average.");
+                }
+            }
+            counter++;
+        }
     }
-
 }
