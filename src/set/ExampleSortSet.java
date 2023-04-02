@@ -59,7 +59,7 @@ public class ExampleSortSet {
         
         //Sorts and shows all series by genre order
         System.out.println("\nGenre order: ");
-        Set<Series> mySeries4 = new TreeSet<>(new GenreOrder());
+        Set<Series> mySeries4 = new TreeSet<>(new GenreComparator());
         mySeries4.addAll(mySeries);
         for (Series serie4 : mySeries4) {
             System.out.println(serie4.getName() + " - "
@@ -68,7 +68,7 @@ public class ExampleSortSet {
 
         //Sorts and shows all series by episode time order
         System.out.println("\nepisodeTime order: ");
-        Set<Series> mySeries5 = new TreeSet<>(new EpisodeTimeOrder());
+        Set<Series> mySeries5 = new TreeSet<>(new EpisodeTimeComparator());
         mySeries5.addAll(mySeries);
         for (Series serie5 : mySeries5) {
             System.out.println(serie5.getName() + " - "
@@ -93,7 +93,7 @@ class NameGenreEpisodeTimeComparator implements Comparator<Series> {
 }
 
 //Implements the Comparator and makes the comparisons to later return the series sorted by genre
-class GenreOrder implements Comparator<Series> {
+class GenreComparator implements Comparator<Series> {
 
     @Override
     public int compare(Series s1, Series s2) {
@@ -104,7 +104,7 @@ class GenreOrder implements Comparator<Series> {
 }
 
 //Implements the Comparator and makes the series comparisons to later return the series sorted by episode time
-class EpisodeTimeOrder implements Comparator<Series> {
+class EpisodeTimeComparator implements Comparator<Series> {
 
     @Override
     public int compare(Series s1, Series s2) {
