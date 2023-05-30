@@ -88,7 +88,7 @@ public class ExampleList {
 
     System.out.println("Check if the list is empty: " + notes.isEmpty());
 
-    System.out.println("Para você: Resolva esses exercícios utilizando os métodos da implementação LinkedList:" );
+    System.out.println("For you: Solve these exercises using methods from the LinkedList implementation:" );
     
     System.out.println("Create a list called notes2 " + "and place all the elements of the list Arraylist in this new list: ");
         LinkedList<Double> notes2 = new LinkedList<>();
