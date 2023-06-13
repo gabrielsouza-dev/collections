@@ -16,7 +16,7 @@ Given the estimated population of some states in northeastern Brazil, do:
  State = RN - population = 3.534.265
  */
 
-public class MapProposedExercise {
+public class ProposedExercise {
     public static void main(String[] args) {
         
         System.out.println("Create a dictionary that lists the states and their respective populations: ");

@@ -12,7 +12,7 @@ import java.util.Random;
 3. Then, show how many times each value was entered.
 */
 
-public class DiceThrowingChallenge {
+public class ProposedExercise1 {
     public static void main(String[] args) {
         //defining the number of dice throws
         int throwings = 100;
