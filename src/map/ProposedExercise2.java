@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.TreeSet;
+//import java.util.function.Function;
 
 /*
 Given the following id and contact information, create a dictionary and
@@ -47,14 +48,81 @@ public class ProposedExercise2 {
         }
 
         System.out.println("\nOrdered by contact name: ");
-        Set<Map.Entry<Integer, ContactBook>> myContactBookSet = new TreeSet<>(new ContactNameComparator());
+        //Before Java 8:
+        /*Set<Map.Entry<Integer, ContactBook>> myContactBookSet = new TreeSet<>(new ContactNameComparator());
         myContactBookSet.addAll(myContactBook1.entrySet());
         for (Map.Entry<Integer,ContactBook> contact3 : myContactBookSet) {
             System.out.println("id = " + contact3.getKey() + " - Contact = name: " + contact3.getValue().getName() + ", number: " + contact3.getValue().getNumber());            
+        }*/
+
+        //After Java 8:
+        //Anonymous Class:
+        /*Set<Map.Entry<Integer, ContactBook>> myContactBookSet = new TreeSet<>(new Comparator<Map.Entry<Integer, ContactBook>>() {
+            @Override
+            public int compare(Entry<Integer, ContactBook> c1, Entry<Integer, ContactBook> c2) {
+                return c1.getValue().getName().compareToIgnoreCase(c2.getValue().getName());
+            }
+        });
+        myContactBookSet.addAll(myContactBook1.entrySet());
+        for (Map.Entry<Integer,ContactBook> contact3 : myContactBookSet) {
+            System.out.println("id = " + contact3.getKey() + " - Contact = name: " + contact3.getValue().getName() + ", number: " + contact3.getValue().getNumber());          
+        }*/
+
+        //Functional Interface:
+        /*Set<Map.Entry<Integer, ContactBook>> myContactBookSet = new TreeSet<>(Comparator.comparing(new Function<Map.Entry<Integer, ContactBook>, String>() {
+            @Override
+            public String apply(Map.Entry<Integer, ContactBook> contact3) {
+                return contact3.getValue().getName();
+            }
+        }));
+        myContactBookSet.addAll(myContactBook1.entrySet());
+        for (Map.Entry<Integer,ContactBook> contact3 : myContactBookSet) {
+            System.out.println("id = " + contact3.getKey() + " - Contact = name: " + contact3.getValue().getName() + ", number: " + contact3.getValue().getNumber());          
+        }*/
+
+        //Lambda:
+        Set<Map.Entry<Integer, ContactBook>> myContactBookSet = new TreeSet<>(Comparator.comparing(contact3 -> contact3.getValue().getName()));
+        myContactBookSet.addAll(myContactBook1.entrySet());
+        for (Map.Entry<Integer,ContactBook> contact3 : myContactBookSet) {
+            System.out.println("id = " + contact3.getKey() + " - Contact = name: " + contact3.getValue().getName() + ", number: " + contact3.getValue().getNumber());          
         }
 
         System.out.println("\nOrdered by phone number: ");
-        Set<Map.Entry<Integer, ContactBook>> myContactBookSet1 = new TreeSet<>(new PhoneNumberComparator());
+        //Before Java 8:
+        /*Set<Map.Entry<Integer, ContactBook>> myContactBookSet1 = new TreeSet<>(new PhoneNumberComparator());
+        myContactBookSet1.addAll(myContactBook1.entrySet());
+        for (Map.Entry<Integer,ContactBook> contact4 : myContactBookSet1) {
+            System.out.println("id = " + contact4.getKey() + " - Contact = name: " + contact4.getValue().getName() + ", number: " + contact4.getValue().getNumber());
+        }*/
+
+
+        //After Java 8:
+        //Anonymous Class:
+        /*Set<Map.Entry<Integer, ContactBook>> myContactBookSet1 = new TreeSet<>(new Comparator<Map.Entry<Integer, ContactBook>>() {
+            @Override
+            public int compare(Entry<Integer, ContactBook> c1, Entry<Integer, ContactBook> c2) {
+                return Integer.compare(c1.getValue().getNumber(), c2.getValue().getNumber());
+            }
+        });
+        myContactBookSet1.addAll(myContactBook1.entrySet());
+        for (Map.Entry<Integer,ContactBook> contact4 : myContactBookSet1) {
+            System.out.println("id = " + contact4.getKey() + " - Contact = name: " + contact4.getValue().getName() + ", number: " + contact4.getValue().getNumber());
+        }*/
+        
+        //Functional Interface:
+        /*Set<Map.Entry<Integer, ContactBook>> myContactBookSet1 = new TreeSet<>(Comparator.comparing(new Function<Map.Entry<Integer, ContactBook>, Integer>() {
+            @Override
+            public Integer apply(Map.Entry<Integer, ContactBook> contact4) {
+                return contact4.getValue().getNumber();
+            }
+        }));
+        myContactBookSet1.addAll(myContactBook1.entrySet());
+        for (Map.Entry<Integer,ContactBook> contact4 : myContactBookSet1) {
+            System.out.println("id = " + contact4.getKey() + " - Contact = name: " + contact4.getValue().getName() + ", number: " + contact4.getValue().getNumber());
+        }*/
+
+        //Lambda:
+        Set<Map.Entry<Integer, ContactBook>> myContactBookSet1 = new TreeSet<>(Comparator.comparing(contact4 -> contact4.getValue().getNumber()));
         myContactBookSet1.addAll(myContactBook1.entrySet());
         for (Map.Entry<Integer,ContactBook> contact4 : myContactBookSet1) {
             System.out.println("id = " + contact4.getKey() + " - Contact = name: " + contact4.getValue().getName() + ", number: " + contact4.getValue().getNumber());
@@ -62,19 +130,17 @@ public class ProposedExercise2 {
     }
 }
 
-class ContactNameComparator implements Comparator<Map.Entry<Integer, ContactBook>> {
+/*class ContactNameComparator implements Comparator<Map.Entry<Integer, ContactBook>> {
 
     @Override
     public int compare(Entry<Integer, ContactBook> c1, Entry<Integer, ContactBook> c2) {
         return c1.getValue().getName().compareToIgnoreCase(c2.getValue().getName());
     }
-    
-}
+}*/
 
-class PhoneNumberComparator implements Comparator<Map.Entry<Integer, ContactBook>> {
-
+/*class PhoneNumberComparator implements Comparator<Map.Entry<Integer, ContactBook>> {
     @Override
     public int compare(Entry<Integer, ContactBook> c1, Entry<Integer, ContactBook> c2) {
         return Integer.compare(c1.getValue().getNumber(), c2.getValue().getNumber());
     }
-}
+}*/
